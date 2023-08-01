@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convert HTML to PDF using JavaScript</title>
+
+  <style>
+    .wrapper {
+      width: 210mm;
+      height: 297mm;
+      margin: auto;
+      background-color: #f2f3f4;
+      color: #000;
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 15px;
+      font-size: 15px;
+    }
+
+    .wrapper img {
+      max-width: 100%;
+    }
+
+    button {
+      float: right;
+      border: 1px solid #087bff;
+      background-color: #087bff;
+      color: #fff;
+      padding: 4px 8px;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background-color: #fff;
+      color: #087bff;
+    }
+
+    table td {
+      border: 0px solid black;
+    }
+
+    hr {
+      height: 1px;
+      border-width: 0;
+      color: black;
+      background-color: black;
+      width: 90%;
+    }
+
+    .company-detail {
+      border-collapse: collapse;
+      margin-top: 20px;
+      margin-right: auto;
+      margin-left: auto;
+      width: fit-content;
+    }
+
+    .company-detail .name {
+      font-size: 30px;
+    }
+
+    .company-detail .trademark {
+      font-size: 10px;
+      text-align: center;
+      vertical-align: top;
+      padding: 0px 10px;
+    }
+
+    .company-detail .ssm {
+      font-size: 10px;
+    }
+
+    .company-address {
+      margin: auto;
+      text-align: center;
+      width: fit-content;
+      font-size: 15px;
+    }
+
+    .company-contact {
+      margin: auto;
+      text-align: center;
+      width: fit-content;
+      font-size: 15px;
+    }
+
+    .company-email {
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      width: fit-content;
+      font-size: 15px;
+    }
+
+    .title-invoice {
+      width: 90%;
+      margin-right: auto;
+      margin-left: auto;
+      font-weight: bold;
+    }
+
+    .invoice-detail {
+      width: 90%;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .clientDetail {
+      width: 65%;
+      height: fit-content;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    .clientDetail td {
+      padding-left: 10px;
+    }
+
+    .invoiceRef {
+      width: 35%;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    .invoice-item {
+      width: 90%;
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 13px;
+      border-spacing: 5px 0px;
+    }
+
+    .invoice-item td {
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .summarize {
+      width: 91%;
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 13px;
+      border-spacing: 5px 0px;
+    }
+
+    .terms {
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .terms td {
+      vertical-align: top;
+    }
+
+    .sub-total {
+      border-spacing: 5px 2px;
+      text-align: right;
+    }
+
+    .sub-total td {
+      font-weight: bold;
+      width: 100%;
+      padding: 0px 0px 0px 40px;
+    }
+  </style>
+
+  <!-- html2canvas library -->
+  <script src="js/html2canvas.min.js"></script>
+
+  <!-- jsPdf Library -->
+  <script src="js/dist/jspdf.umd.js"></script>
+
+  <!-- Script to Convert HTML to PDF & Download -->
+  <script>
+    window.jsPDF = window.jspdf.jsPDF;
+
+    //Generate PDF document 
+    function generatePDF() {
+      var doc = new jsPDF();
+
+      doc.text(20, 20, 'Hello World!');
+      doc.text(20, 30, 'This is client-side Javascript to generate PDF.');
+
+      //Add new page
+      doc.addPage();
+      doc.text(20, 20, 'Hello World!');
+      doc.text(20, 30, 'This is Second Page.');
+
+      //Save the PDF
+      doc.save('document.pdf');
+    }
+
+    //Generate PDF document with landscape orientation
+    function generatePDF_2() {
+      var doc = new jsPDF({
+        orientation: 'landscape'
+      });
+      doc.text(20, 20, 'Hello World!');
+      doc.text(20, 30, 'This is client-side Javascript to generate PDF.');
+      doc.save('document.pdf');
+    }
+
+    //Generate PDF document with different font faces, text alignment and rotation
+    function generatePDF_3() {
+      var doc = new jsPDF();
+
+      doc.text(20, 20, 'Default Font');
+
+      doc.setFont("courier", "normal");
+      doc.text("This is courier normal.", 20, 30)
+
+      doc.setFont("times", "italic");
+      doc.text("This is tines normal.", 20, 40)
+
+      doc.setFont("times new roman", "bold");
+      doc.text("This is times new roman normal.", 20, 50)
+
+      doc.setFont("courier", "bolditalic");
+      doc.text("This is courier bold italic.", 20, 60)
+
+      //Text alignment
+      doc.setFont("times", "normal");
+      doc.text("This is centred text.", 105, 80, null, null, "center");
+      doc.text("And a little bit more underneath it.", 105, 90, null, null, "center");
+      doc.text("This is right aligned text", 200, 100, null, null, "right");
+      doc.text("And some more right", 200, 110, null, null, "right");
+      doc.text("Back to left", 20, 120);
+
+      //Text rotation
+      doc.text("10 degress rotated", 20, 140, null, 10);
+      doc.text("-10 degrees rotated", 20, 160, null, -10);
+
+      //Save the PDF
+      doc.save('document.pdf');
+    }
+
+    //Generate PDF document with different Font Sizes
+    function generatePDF_4() {
+      var doc = new jsPDF();
+
+      doc.setFontSize(24);
+      doc.text("This is a title", 20, 20);
+
+      doc.setFontSize(16);
+      doc.text("This is some normal sized text.", 20, 30);
+
+      //Save the PDF
+      doc.save('document.pdf');
+    }
+
+    //Generate PDF document with Image
+    function generatePDF_5() {
+      var doc = new jsPDF();
+
+      doc.setFontSize(24);
+      doc.text("This is a title", 20, 20);
+
+      doc.setFontSize(16);
+      doc.text("This is some normal sized text.", 20, 30);
+
+      //Add Image
+
+      doc.addImage("images/luffy.jpg", "JPEG", 15, 40, 180, 180);
+
+      doc.save('document.pdf');
+    }
+
+    //Convert HTML content to PDF
+    function Convert_HTML_To_PDF() {
+      var doc = new jsPDF();
+
+      // Source HTML Element or a string containing HTML
+      var elementHTML = document.querySelector("#contentToPrint");
+
+      doc.html(elementHTML, {
+        callback: function (doc) {
+          doc.save('document-html.pdf');
+        },
+        margin: [0, 0, 0, 0],
+        autoPaging: 'text',
+        x: 10,
+        y: 0,
+        width: 190,
+        windowWidth: 790
+      });
+    }
+
+  </script>
+</head>
+
+<body>
+
+  <!-- Modify Invoice Template -->
+  <div>
+    <!-- Compay Details -->
+    <div>
+      <label for="coName">Company Name:</label>
+      <input type="text" id="coName" name="coName"> <br>
+
+      <label for="coAddress">Company Address:</label>
+      <input type="text" id="coAddress" name="coAddress"> <br>
+
+      <label for="coRegNum">Company Register Number:</label>
+      <input type="text" id="coRegNum" name="coRegNum"> <br>
+
+      <label for="coEmail">Company Email:</label>
+      <input type="text" id="coEmail" name="coEmail"> <br>
+
+      <label for="coBankName">Company Bank Name:</label>
+      <input type="text" id="coBank" name="coBank"> <br>
+
+      <label for="coBankName">Company Bank Account Name:</label>
+      <input type="text" id="coBankName" name="coBankName"> <br>
+
+      <label for="coBankNum">Company Bank Account:</label>
+      <input type="text" id="coBankNum" name="coBankNum"> <br> <br>
+    </div>
+
+    <!-- Client Details -->
+    <div>
+      <label for="clientCo">Client Company Name:</label>
+      <input type="text" id="clientCo" name="clientCo"> <br>
+
+      <label for="clientAdd">Client Company Address:</label>
+      <input type="text" id="clientAdd" name="clientAdd"> <br>
+
+      <label for="clientPic">Client People In Charge:</label>
+      <input type="text" id="clientPic" name="clientPic"> <br>
+
+      <label for="clientContact">Client Contact:</label>
+      <input type="text" id="clientContact" name="clientContact"> <br> <br>
+    </div>
+
+    <!-- T&C -->
+    <div>
+      <label for="termsOFsales">Terms Of Sales:</label>
+      <input type="text" id="termsOFsales" name="termsOFsales"> <br> <br>
+    </div>
+
+    <!-- Invoice Details -->
+    <div>
+      <label for="paymentTerms">Payment Terms:</label>
+      <input type="text" id="paymentTerms" name="paymentTerms"> <br>
+
+      <label for="deliveryDate">Delivery Date:</label>
+      <input type="text" id="deliveryDate" name="deliveryDate"> <br>
+
+      <label for="itemCode">Item Code:</label>
+      <input type="text" id="itemCode" name="itemCode"> <br>
+
+      <label for="itemDes">Item Description:</label>
+      <input type="text" id="itemDes" name="itemDes"> <br>
+
+      <label for="itemQty">Item Quantity:</label>
+      <input type="text" id="itemQty" name="itemQty"> <br>
+
+      <label for="unitPrice">Unit Price:</label>
+      <input type="text" id="unitPrice" name="unitPrice"> <br>
+
+      <label for="itemDisc">Item Discount:</label>
+      <input type="text" id="itemDisc" name="itemDisc"> <br>
+
+      <label for="totalPrice">Total Price:</label>
+      <input type="text" id="totalPrice" name="totalPrice"> <br>
+
+      <label for="currency">Cuurency:</label>
+      <input type="text" id="currency" name="currency"> <br> <br>
+    </div>
+  </div>
+
+  <!-- Button to Download PDF -->
+  <button onclick="Convert_HTML_To_PDF()">Convert HTML to PDF</button>
+
+  <!-- Invoice Template -->
+  <div class="container">
+    <div class="wrapper">
+
+      <!-- HTML content for PDF creation -->
+      <div id="contentToPrint">
+
+        <!-- Company Name / SSM -->
+        <table class="company-detail">
+          <tr>
+            <td><span id="co-name" class="name">SMART UNIFORM SDN BHD</span></td>
+            <td><span id="co-trademark" class="trademark">TM</span></td>
+            <td><span id="co-ssm" class="ssm">(co. 589334-U)</span></td>
+          </tr>
+        </table>
+
+        <!-- Company Address -->
+        <table class="company-address">
+          <td><span>NO.1, JALAN SS25/34, TAMAN EMAS,<br>MAYANG INDUSTRIAL PARK, 47301, PETALING JAYA, SELANGOR.</span>
+          </td>
+        </table>
+
+        <!-- Company Contact -->
+        <table class="company-contact">
+          <td>
+            <span>Tel : 03-7887 5166 / 03-78806188</span>
+          </td>
+        </table>
+
+        <!-- Company Email -->
+        <table class="company-email">
+          <td>
+            <span>Email : smart.uniform@yahoo.com &nbsp Website : www.smartuniformmalaysia.com</span>
+          </td>
+        </table>
+
+        <!-- Add a Horizontol Line -->
+        <hr>
+
+        <!-- Invoice Details -->
+        <table class="invoice-detail">
+          <!-- Client Details (Address, Ppl in charge, Contact) -->
+          <td class="clientDetail">
+            <table style="width: 95%;">
+              <tr>
+                <td style="font-size: 30px; font-style: bold; text-align: right;">INVOICE</td>
+              </tr>
+              <tr>
+                <td style="border-left: 1px solid black;">
+                  <hr style="width: 9%; margin-left: -10px; margin-top: -1px;">
+                  NEWTZ SPORTWEAR TRADING (AT 0597)
+                </td>
+                <td style="border-top: 1px solid black;border-right: 1px solid black;">&nbsp &nbsp
+                  &nbsp</td>
+              </tr>
+              <tr>
+                <td>
+                  NO. 28, JALAN COKMAR 2L <br> TAMAN MUTIARA BUKIT RAJA <br>41050 KLANG <br>SELANGOR
+                </td>
+              </tr>
+              <tr>
+                <td>LEOW JOON JET</td>
+              </tr>
+              <tr>
+                <td style="border-left: 1px solid black;">016 266 5271
+                  <hr style="width: 9%; margin-left: -10px; margin-bottom: -1px;">
+                </td>
+                <td style="border-bottom: 1px solid black;border-right: 1px solid black;">&nbsp &nbsp
+                  &nbsp</td>
+              </tr>
+
+            </table>
+          </td>
+
+          <!-- Invoice Reference -->
+          <td class="invoiceRef" style="vertical-align: top;">
+            <table style="border-spacing: 10px 7px;">
+              <tr style="height: 36.4px; font-weight:bold ;">
+                <td style="text-align: right;">No.</td>
+                <td>:</td>
+                <td>HQA 32836</td>
+              </tr>
+              <tr>
+                <td>Your Ref.</td>
+                <td>:</td>
+                <td>ALIA</td>
+              </tr>
+              <tr>
+                <td>Invoice Date</td>
+                <td>:</td>
+                <td>28/06/2023</td>
+              </tr>
+              <tr>
+                <td>Terms</td>
+                <td>:</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Delivery Date</td>
+                <td>:</td>
+                <td>29/06/2023</td>
+              </tr>
+              <tr>
+                <td>Page</td>
+                <td>:</td>
+                <td>1 of 1</td>
+              </tr>
+            </table>
+          </td>
+        </table>
+
+        <!-- Add a Horizontol Line -->
+        <hr>
+
+        <!-- Invoice Item Title -->
+        <table class="invoice-item">
+          <td style="width: 5%;">Item</td>
+          <td style="width: 13%;">Item Code</td>
+          <td style="width: 42%;">Description</td>
+          <td style="width: 5%;">Qty</td>
+          <td style="width: 11%;">U/Price <span style="font-size: 10px;">(RM)</span></td>
+          <td style="width: 14%; padding-left: 5px;">Disc.</td>
+          <td style="width: 10%;">Total <span style="font-size: 10px;">(RM)</span></td>
+        </table>
+
+        <!-- Add a Horizontol Line -->
+        <hr>
+
+        <!-- Invoice Items -->
+        <table class="invoice-item" style="border-spacing: 5px 5px;">
+          <tr>
+            <td style="width: 5%; text-align: center;">1.</td>
+            <td style="width: 13%;">CU003XL</td>
+            <td style="width: 42%;">CHEF JACKET SHORT SLEEVE WHITE PIPING BLACK (NC) - XL</td>
+            <td style="width: 5%; text-align: center; padding-right: 10px;">2</td>
+            <td style="width: 11%; text-align: right; padding-right: 10px;">42.30</td>
+            <td style="width: 14%; padding-left: 5px;"></td>
+            <td style="width: 10%; text-align: right; padding-right: 16px;">84.60</td>
+          </tr>
+
+          <tr>
+            <td style="width: 5%; text-align: center;">2.</td>
+            <td style="width: 13%;">CU003XL</td>
+            <td style="width: 42%;">CHEF JACKET SHORT SLEEVE WHITE PIPING BLACK (NC) - XL</td>
+            <td style="width: 5%; text-align: center; padding-right: 10px;">2</td>
+            <td style="width: 11%; text-align: right; padding-right: 10px;">42.30</td>
+            <td style="width: 14%; padding-left: 5px;"></td>
+            <td style="width: 10%; text-align: right; padding-right: 16px;">84.60</td>
+          </tr>
+
+          <tr>
+            <td style="width: 5%; text-align: center;">3.</td>
+            <td style="width: 13%;">CU003XL</td>
+            <td style="width: 42%;">CHEF JACKET SHORT SLEEVE WHITE PIPING BLACK (NC) - XL</td>
+            <td style="width: 5%; text-align: center; padding-right: 10px;">2</td>
+            <td style="width: 11%; text-align: right; padding-right: 10px;">42.30</td>
+            <td style="width: 14%; padding-left: 5px;"></td>
+            <td style="width: 10%; text-align: right; padding-right: 16px;">84.60</td>
+          </tr>
+
+          <tr>
+            <td style="width: 5%; text-align: center;">4.</td>
+            <td style="width: 13%;">CU003XL</td>
+            <td style="width: 42%;">CHEF JACKET SHORT SLEEVE WHITE PIPING BLACK (NC) - XL</td>
+            <td style="width: 5%; text-align: center; padding-right: 10px;">2</td>
+            <td style="width: 11%; text-align: right; padding-right: 10px;">42.30</td>
+            <td style="width: 14%; padding-left: 5px;"></td>
+            <td style="width: 10%; text-align: right; padding-right: 16px;">84.60</td>
+          </tr>
+
+          <tr>
+            <td style="width: 5%; text-align: center;">5.</td>
+            <td style="width: 13%;">CU003XL</td>
+            <td style="width: 42%;">CHEF JACKET SHORT SLEEVE WHITE PIPING BLACK (NC) - XL</td>
+            <td style="width: 5%; text-align: center; padding-right: 10px;">2</td>
+            <td style="width: 11%; text-align: right; padding-right: 10px;">42.30</td>
+            <td style="width: 14%; padding-left: 5px;"></td>
+            <td style="width: 10%; text-align: right; padding-right: 16px;">84.60</td>
+          </tr>
+
+          <tr>
+            <td style="width: 5%; text-align: center;">6.</td>
+            <td style="width: 13%;">CU003XL</td>
+            <td style="width: 42%;">CHEF JACKET SHORT SLEEVE WHITE PIPING BLACK (NC) - XL</td>
+            <td style="width: 5%; text-align: center; padding-right: 10px;">2</td>
+            <td style="width: 11%; text-align: right; padding-right: 10px;">42.30</td>
+            <td style="width: 14%; padding-left: 5px;"></td>
+            <td style="width: 10%; text-align: right; padding-right: 16px;">84.60</td>
+          </tr>
+
+          <tr>
+            <td style="width: 5%; text-align: center;">7.</td>
+            <td style="width: 13%;">CU003XL</td>
+            <td style="width: 42%;">CHEF JACKET SHORT SLEEVE WHITE PIPING BLACK (NC) - XL</td>
+            <td style="width: 5%; text-align: center; padding-right: 10px;">1</td>
+            <td style="width: 11%; text-align: right; padding-right: 10px;">7.30</td>
+            <td style="width: 14%; padding-left: 5px;"></td>
+            <td style="width: 10%; text-align: right; padding-right: 16px;">7.30</td>
+          </tr>
+
+          <tr>
+            <td style="width: 5%; text-align: center;">8.</td>
+            <td style="width: 13%;">APMPB012</td>
+            <td style="width: 42%;">MINI APRON POLYSTER</td>
+            <td style="width: 5%; text-align: center; padding-right: 10px;">12</td>
+            <td style="width: 11%; text-align: right; padding-right: 10px;">7.00</td>
+            <td style="width: 14%; padding-left: 5px;"></td>
+            <td style="width: 10%; text-align: right; padding-right: 16px;">14.00</td>
+          </tr>
+        </table>
+
+        <!-- Add a Horizontol Line -->
+        <hr>
+
+        <!-- Sub Total / T&C -->
+        <table class="summarize">
+
+          <!-- T&C -->
+          <td style="width: 70%;">
+            <table>
+              <tr>
+                <td>RINGGIT MALAYSIA THREE HUNDRED NINETY NINE ONLY</td>
+
+                <td style="font-weight: bold; padding-left: 13px;">Total</td>
+                <td style="font-weight: bold;">:</td>
+                <td style="font-weight: bold; padding: 0px 13px; border: 1px solid black;">16</td>
+              </tr>
+            </table>
+
+            <table class="terms">
+              <tr>
+                <td colspan="2">Terms of Sales:</td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">1.</td>
+                <td>
+                  Due to coluring (dye) process, the materials & colours may differ 5-10% for all products.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">2.</td>
+                <td>
+                  Payment:- Full payment is needed if Invoice amount is less than RM 500.00.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">3.</td>
+                <td>
+                  Payment:- 50% deposit is required upon confirmation of order (before production). <br>Full payment
+                  is required before collection.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">4.</td>
+                <td>
+                  Payment by cheque: Goods will be released upon clearance of cheque in 3 working days.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">5.</td>
+                <td>
+                  "Instant Transfer" must be done on collection.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">6.</td>
+                <td>
+                  Printing :- Adobe Illustration (AI) file is needed. <br>
+                  A separate charge will be applicable to convert it to Adobe Illustration (Al) file.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">7.</td>
+                <td>
+                  Defective goods must be returned within 3 days from Invoice / Delivery Date.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">8.</td>
+                <td>
+                  Goods sold are not refundable nor returnable. <br>
+                  10% surcharge shall be applied for each item exchanged.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">9.</td>
+                <td>
+                  Delivery of goods will be charged accordingly based on quantity & location. <br>
+                  Goods delivery will be only sent to ground level of the building.
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 1%;">10.</td>
+                <td>
+                  Kindly make payment to : <br>
+                  <b>MALAYAN BANKING BERHAD (Maybank)</b><br>
+                  <b>"SMART UNIFORM SD BHD" </b><br>
+                  <b>Bank Account: 5141 9634 7270</b>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+
+          <!-- Sub Total -->
+          <td style="width: 30%; vertical-align: top;">
+            <table class="sub-total">
+              <tr>
+                <td>Sub Total</td>
+                <td style="border: 1px solid black;">399.00</td>
+              </tr>
+              <tr>
+                <td>Rounding Adj</td>
+                <td style="border: 1px solid black;">0.00</td>
+              </tr>
+              <tr>
+                <td>Final Totall</td>
+                <td style="border: 1px solid black;">399.00</td>
+              </tr>
+              <tr>
+                <td>Deposit</td>
+                <td style="border: 1px solid black;">0.00</td>
+              </tr>
+              <tr>
+                <td>Balance</td>
+                <td style="border: 1px solid black;">399.00</td>
+              </tr>
+            </table>
+          </td>
+
+        </table>
+
+
+      </div><!-- HTML content for PDF creation -->
+
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
